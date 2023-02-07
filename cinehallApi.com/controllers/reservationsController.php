@@ -104,9 +104,14 @@ class reservationsController {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if($requestMethod == "POST"){
             $id = $_POST['id'];
+            $idS = $_POST['idS'];
             $reservation = new reservation;
             $reservation->deletereservation($id);
-            echo " reservation deleted in id= ".$id;
+            $reservation->unbook($idS);
+            $data = [
+                'message' => 'deleted',
+            ];
+                echo json_encode($data);
         }else{
             $data = [
             'status' => 405,

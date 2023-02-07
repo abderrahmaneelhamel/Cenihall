@@ -13,6 +13,15 @@ export default {
   components: {
     hero,
     list,
+  },
+  created(){
+    const options = {
+      method: 'GET',
+    };
+        
+      fetch('http://cinehallApi.com/rand', options)
+      .then(response => response.json())
+      .catch(err => console.error(err));
   }
 }
 </script>

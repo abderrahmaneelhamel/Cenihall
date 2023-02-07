@@ -1,5 +1,5 @@
 <template>
-  <div class="px-96">    
+  <div class="px-96 my-28">    
   <div class="bg-white border border-gray-200 rounded-lg mt-24 shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <form class="object-center" method="post" @submit.prevent="login">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">Login to your account</h5>
@@ -70,6 +70,11 @@ import cookies from 'vue-cookies'
       },
       created(){
        $cookies.remove('identifier')
+        $cookies.remove('id');
+        $cookies.remove('fullname');
+        $cookies.remove('image');
+        $cookies.remove('email');
+        $cookies.remove('role');
     }
 
         

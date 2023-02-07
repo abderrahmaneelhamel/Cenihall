@@ -117,7 +117,11 @@
                     case 'check' :
                         $update = new seatsController;
                         $update->isFull();
-                        break;     
+                        break; 
+                    case 'rand' :
+                        $update = new seatsController;
+                        $update->rand();
+                        break;    
                     default :
                         echo "Please choose a valide requeste";
                         break;                             

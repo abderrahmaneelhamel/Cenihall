@@ -37,7 +37,31 @@ class seatsController {
         if($requestMethod == "POST"){
             $id = $_POST['id'];
             $seats = new seats;
-            $seatsList = $seats->isFull($id);
+            $seats->isFull($id);
+            $data = [
+                'status' => 200,
+                'message' => 'good',
+                ];
+                echo json_encode($data);
+        }else{
+            $data = [
+            'status' => 405,
+            'message' => $requestMethod. 'Method Not Allowed',
+            ];
+            header("HTTP/1.0 405 Method Not Allowed");
+            echo json_encode($data);
+        }
+    }
+    public function rand()
+    {
+        header('Access-Control-Allow-Origin:*');
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Method: GET');
+        header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorisation');
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if($requestMethod == "GET"){
+            $seats = new seats;
+            $seats->rand();
             $data = [
                 'status' => 200,
                 'message' => 'good',

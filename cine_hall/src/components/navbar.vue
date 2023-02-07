@@ -52,6 +52,9 @@
       <li>
         <router-link to="/about" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white">about</router-link>
       </li>
+      <li>
+        <router-link to="/reservations" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white">reservations</router-link>
+      </li>
     </ul>
   </div>
   </div>

@@ -94,6 +94,32 @@ require("connection.php");
                     $sql="UPDATE `halls` SET is_full = 1 WHERE id = $id;";
                     $result = $conn->prepare($sql);
                     $result->execute() or die("Erreur lors de l'execution de la requete: ");
+                }else{
+                    $sql="UPDATE `halls` SET is_full = 0 WHERE id = $id;";
+                    $result = $conn->prepare($sql);
+                    $result->execute() or die("Erreur lors de l'execution de la requete: ");
+                }
+            }
+        }
+        function rand(){
+            $test = new connection;
+            $conn = $test->connection();
+            
+            if($conn->connect_error){
+                die('conection failed :'.$conn->connect_error);
+                echo "error";
+                }else{
+                $sql="SELECT id FROM `movies` WHERE `Mdate` = CURRENT_DATE;";
+                $resultat = mysqli_query($conn,$sql);
+                $i = 1;
+                while($row = mysqli_fetch_assoc($resultat)){
+                    $id = $row['id'];
+                    if($i<=4){
+                        $sql="UPDATE `halls` SET movie = $id WHERE id = $i";
+                        $result = $conn->prepare($sql);
+                        $result->execute() or die("Erreur lors de l'execution de la requete: ");
+                    }
+                    $i++;
                 }
             }
         }
