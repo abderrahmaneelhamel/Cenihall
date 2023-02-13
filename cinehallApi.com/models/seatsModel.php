@@ -101,6 +101,26 @@ require("connection.php");
                 }
             }
         }
+        function isBooked($id){
+            $test = new connection;
+            $conn = $test->connection();
+            $response = array();
+            if($conn->connect_error){
+                die('conection failed :'.$conn->connect_error);
+                echo "error";
+                }else{
+                $sql="SELECT seat FROM `reservations` WHERE `date` = '$id';";
+                $resultat = mysqli_query($conn,$sql);
+                if($resultat) {
+                    $x = 0;
+                    while ($row = mysqli_fetch_assoc($resultat)) {
+                        $response [$x] = $row['seat'];
+                        $x++;
+                    }
+                    return json_encode($response, JSON_PRETTY_PRINT);
+                }
+            }
+        }
         function rand(){
             $test = new connection;
             $conn = $test->connection();
@@ -122,6 +142,49 @@ require("connection.php");
                     $i++;
                 }
             }
+        }
+        function rand2($date){
+            $test = new connection;
+            $conn = $test->connection();
+            
+            if($conn->connect_error){
+                die('conection failed :'.$conn->connect_error);
+                echo "error";
+                }else{
+                $sql="SELECT id FROM `movies` WHERE `Mdate` = '$date';";
+                $resultat = mysqli_query($conn,$sql);
+                $row = mysqli_fetch_assoc($resultat);
+                if($row > 1){
+                    $i = 1;
+                    while($row = mysqli_fetch_assoc($resultat)){
+                        $id = $row['id'];
+                        if($i<=4){
+                            $sql="UPDATE `halls` SET movie = $id WHERE id = $i";
+                            $result = $conn->prepare($sql);
+                            $result->execute() or die("Erreur lors de l'execution de la requete: ");
+                        }
+                        $i++;
+                    }
+                    $response = array();
+                    $sql = "SELECT h.id , m.price , m.title , m.image , m.description , h.label FROM `halls` h , `movies` m WHERE h.movie = m.id and h.is_full = 0;";
+                    $result = mysqli_query($conn, $sql);
+                    if($result) {
+                        $x = 0;
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $response [$x]['id'] = $row['id'];
+                            $response [$x]['title'] = $row['title'];
+                            $response [$x]['image'] = $row['image'];
+                            $response [$x]['label'] = $row['label'];
+                            $response [$x]['price'] = $row['price'];
+                            $response [$x]['description'] = $row['description'];
+                            $x++;
+                        }
+                        echo json_encode($response, JSON_PRETTY_PRINT);
+                    }
+                }else{
+                    echo json_encode('0');
+                }
+        }
         }
         function createReservation($costumer,$seat,$hall,$date){
             $test = new connection;

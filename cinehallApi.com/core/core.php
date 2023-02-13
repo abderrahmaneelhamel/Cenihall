@@ -118,10 +118,18 @@
                         $update = new seatsController;
                         $update->isFull();
                         break; 
+                    case 'isBooked' :
+                        $update = new seatsController;
+                        $update->isBooked();
+                        break;
                     case 'rand' :
                         $update = new seatsController;
                         $update->rand();
-                        break;    
+                        break; 
+                    case 'rand2' :
+                        $update = new seatsController;
+                        $update->rand2();
+                        break;       
                     default :
                         echo "Please choose a valide requeste";
                         break;                             

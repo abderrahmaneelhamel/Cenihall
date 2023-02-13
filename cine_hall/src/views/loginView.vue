@@ -1,6 +1,6 @@
 <template>
-  <div class="px-96 my-28">    
-  <div class="bg-white border border-gray-200 rounded-lg mt-24 shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+  <div class="flex justify-center my-20">    
+  <div id="form" class="bg-white border border-gray-200 rounded-lg mt-24 shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <form class="object-center" method="post" @submit.prevent="login">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">Login to your account</h5>
           <div class="my-6">
@@ -19,9 +19,22 @@
   </div>
   </div>
 </template>
+<style>
+#form{
+  width: 45%;
+}
+@media only screen and (max-width: 650px){
+  #form{
+    background-color: rgb(17 24 39/var(--tw-bg-opacity));
+    border : 0;
+    width: 90%;
+  }
+}
+</style>
 <script>
 import axios from 'axios'
 import cookies from 'vue-cookies'
+import swal from 'sweetalert';
 
 
     export default {
@@ -33,8 +46,9 @@ import cookies from 'vue-cookies'
         }
       },
       methods: {
-        login() {
+        login(){
           let ident = this.identifier;
+          let trt = 0;
           let keep = this.keep;
           let router = this.$router;
           axios.get('http://cinehallApi.com/getUser')
@@ -42,7 +56,8 @@ import cookies from 'vue-cookies'
             let temp = response.data;
             temp.map((item) => {
               if(ident == item.identifier){
-                if(keep == true){
+                trt = 1;
+                if(keep == false){
                   cookies.set('identifier', ident);
                   cookies.set('id', item.id);
                   cookies.set('fullname', item.fullName);
@@ -62,10 +77,18 @@ import cookies from 'vue-cookies'
                 router.push('/home').then(() => { router.go() });
               }
             });
+            if(trt == 0){
+              swal({
+                    title: "Non valid identifier!",
+                    icon: "error",
+                    button: "ok",
+              })
+            }
           })
           .catch(function (error) {
             console.log(error);
           }); 
+          this.identifier = '';
         }
       },
       created(){

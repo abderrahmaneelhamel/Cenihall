@@ -53,7 +53,8 @@
       name: 'reservations',
       data(){
         return{
-            reservations : []
+            reservations : [],
+            role : ''
         }
       },
       methods : {
@@ -77,20 +78,38 @@
         }
       },
       created(){
-        let formData = new FormData();
-                    formData.append('id', $cookies.get('id'));
-
-                const options = {
-                    method: 'POST',
-                    body: formData
+        if(!$cookies.get('identifier')){
+            this.$router.push('/login');
+        }
+        this.role = $cookies.get('role');
+        if(this.role == 'admin'){
+            const options = {
+                    method: 'GET',
                 };
-                fetch('http://cinehallApi.com/getSingleReservation',options).then(response => response.json())
+                fetch('http://cinehallApi.com/getReservation',options).then(response => response.json())
                 .then(data =>{
                     this.reservations = data 
                 })
                 .catch(function (error) {
                     console.error(error);
                 });
+        }else{
+            let formData = new FormData();
+                    formData.append('id', $cookies.get('id'));
+
+            const options = {
+                method: 'POST',
+                body: formData
+            };
+            fetch('http://cinehallApi.com/getSingleReservation',options).then(response => response.json())
+            .then(data =>{
+                this.reservations = data 
+            })
+            .catch(function (error) {
+                console.error(error);
+            }); 
+        }
+        
       }
     }  
 </script>

@@ -16,9 +16,10 @@ class moviesController {
         if($requestMethod == "POST"){
             $title = $_POST['title'];
             $image = $_POST['image'];
+            $date = $_POST['date'];
             $description = $_POST['description'];
             $movies = new movies;
-            $movies->Creatmovies($title,$image,$description);
+            $movies->Creatmovies($title,$image,$date,$description);
         }else{
             $data = [
             'status' => 405,
@@ -78,11 +79,9 @@ class moviesController {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if($requestMethod == "POST"){
             $id = $_POST['id'];
-            $title = isset($_POST["title"]) ? $_POST["title"] : null;
-            $image = isset($_POST["image"]) ? $_POST["image"] : null;
-            $description = isset($_POST["description"]) ? $_POST["description"] : null;
+            $date = isset($_POST["date"]) ? $_POST["date"] : null;
             $movies = new movies;
-            $movies->updatemovies($id,$title,$image,$description);
+            $movies->updatemovies($id,$date);
             echo " movies updated";
         }else{
             $data = [

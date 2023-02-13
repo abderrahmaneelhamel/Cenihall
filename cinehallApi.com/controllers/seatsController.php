@@ -52,6 +52,27 @@ class seatsController {
             echo json_encode($data);
         }
     }
+    public function isBooked()
+    {
+        header('Access-Control-Allow-Origin:*');
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Method: POST');
+        header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorisation');
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if($requestMethod == "POST"){
+            $id = $_POST['id'];
+            $seats = new seats;
+            $res = $seats->isbooked($id);
+            echo $res;
+        }else{
+            $data = [
+            'status' => 405,
+            'message' => $requestMethod. 'Method Not Allowed',
+            ];
+            header("HTTP/1.0 405 Method Not Allowed");
+            echo json_encode($data);
+        }
+    }
     public function rand()
     {
         header('Access-Control-Allow-Origin:*');
@@ -67,6 +88,26 @@ class seatsController {
                 'message' => 'good',
                 ];
                 echo json_encode($data);
+        }else{
+            $data = [
+            'status' => 405,
+            'message' => $requestMethod. 'Method Not Allowed',
+            ];
+            header("HTTP/1.0 405 Method Not Allowed");
+            echo json_encode($data);
+        }
+    }
+    public function rand2()
+    {
+        header('Access-Control-Allow-Origin:*');
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Method: POST');
+        header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorisation');
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if($requestMethod == "POST"){
+            $date = $_POST['date'];
+            $seats = new seats;
+            $seats->rand2($date);
         }else{
             $data = [
             'status' => 405,
@@ -157,10 +198,8 @@ class seatsController {
             $seats = new seats;
             $seats->bookseat($id,$is_booked);
             $seats->createReservation($costumer,$seat,$hall,$date);
-            $data = [
-                'message' => "success",
-                ];
-            echo json_encode($data);
+            $seatssList = $seats->getSingle($hall);
+            echo $seatssList;
         }else{
             $data = [
             'status' => 405,
