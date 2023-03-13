@@ -49,7 +49,6 @@ require("connection.php");
             
             if($conn->connect_error){
                 die('conection failed :'.$conn->connect_error);
-                echo "error";
                 }else{
                 $sql="INSERT INTO `movies` (`title`,`image`, `Mdate` ,`description`) VALUES (?,?,?,?)";
                 $resultat = $conn->prepare($sql);
@@ -64,7 +63,6 @@ require("connection.php");
             $sql="UPDATE `movies` SET `Mdate` = '$date' WHERE `id` = $id ;";
             if($conn->connect_error){
                die('conection failed :'.$conn->connect_error);
-               echo "error";
                }else{
                 $resultat = $conn->prepare($sql);
                 $resultat->execute() or die("Erreur lors de l'execution de la requete: ");
@@ -89,7 +87,6 @@ require("connection.php");
             $conn = $test->connection();
             if($conn->connect_error){
                 die('conection failed :'.$conn->connect_error);
-                echo "error";
             }else{
                  $sql = "DELETE FROM `movies` WHERE `movies`.`id` = ?";
                  $resultat = $conn->prepare($sql);

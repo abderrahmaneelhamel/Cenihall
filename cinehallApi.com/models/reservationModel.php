@@ -27,13 +27,13 @@ require("connection.php");
             $con = $test->connection();
             $response = array();
             if ($con) {
-            $sql = "SELECT * FROM `reservations` WHERE costumer = $id";
+            $sql = "SELECT r.id , u.full_name , r.seat , r.hall , r.date FROM reservations r , users u WHERE r.costumer = $id AND r.costumer = u.id;";
             $result = mysqli_query($con, $sql);
             if($result) {
                 $x = 0;
                 while ($row = mysqli_fetch_assoc($result)) {
                     $response [$x]['id'] = $row['id'];
-                    $response [$x]['costumer'] = $row['costumer'];
+                    $response [$x]['costumer'] = $row['full_name'];
                     $response [$x]['seat'] = $row['seat'];
                     $response [$x]['hall'] = $row['hall'];
                     $response [$x]['date'] = $row['date'];
